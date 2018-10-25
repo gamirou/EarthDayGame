@@ -64,5 +64,5 @@ class Framework:
             pygame.quit()
             sys.exit()
 
-    def enter_game(self):
+    def enter_game(self, name, gender):
         pass
