@@ -55,7 +55,7 @@ class MenuState:
     def update(self, dt: float, events: list):
         if self.current_state == MenuStates.PLAY:
             char_data = self.get_screen_data(MenuStates.CHAR_SETUP)
-            self.framework.enter_game(char_data.char_name[1:], char_data.gender_options[char_data.gender_choice])
+            self.framework.enter_game(char_data.char_name, char_data.gender_options[char_data.gender_choice])
             return
         elif self.current_state == MenuStates.QUIT:
             pygame.event.post(pygame.event.Event(pygame.QUIT, {}))
@@ -173,8 +173,8 @@ class CharSetupMenuItem(MenuItem):
                     if option_values[self.selected_option] is not None:
                         self.menu_state.current_state = option_values[self.selected_option] or MenuStates.MAIN_MENU
                     elif option_keys[self.selected_option] == "Start Game":
-                        print("Start the game")
-                        self.menu_state.current_state = MenuStates.PLAY
+                        if len(self.char_name) != 0:
+                            self.menu_state.current_state = MenuStates.PLAY
                 elif option_keys[self.selected_option] == "Name":
                     if event.key == pygame.locals.K_BACKSPACE:
                         self.char_name = self.char_name[:-1]

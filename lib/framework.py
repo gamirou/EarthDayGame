@@ -1,19 +1,20 @@
 import pygame, sys, platform, os
 
+from game.game import GameState
 from lib.menu import MenuState
 
 class Framework:
     """The core state of our app."""
 
-    caption = 'Earth Day 2018'
+    caption = 'Earth Day 2019'
     
-    dimensions = (1024, 724)
+    dimensions = (1360, 765)
 
     fps = 60
     running = True
     clock = pygame.time.Clock()
 
-    def __init__(self, GameState):
+    def __init__(self):
         # Initialise pygame
         pygame.init()
         pygame.font.init()
@@ -22,7 +23,6 @@ class Framework:
         self.screen = pygame.display.set_mode(self.dimensions, pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
 
         # Delegate
-        self.GameState = GameState
         self.state = MenuState(self)
 
     def main_loop(self):
@@ -32,13 +32,13 @@ class Framework:
         # While we haven't been stopped
         while self.running:
             # Black-out the screen
-            self.screen.fill((0, 100, 0))
+            self.screen.fill((77, 140, 242))
 
             # Count how long has passed since we last did this
             dt = self.clock.tick(self.fps) / 1000.0
 
             # Grab any keyboard/window events
-            events = [ event for event in pygame.event.get() ]
+            events = [event for event in pygame.event.get()]
 
             for event in events:
                 # The user probably closed the window, let's quit
@@ -65,4 +65,7 @@ class Framework:
             sys.exit()
 
     def enter_game(self, name, gender):
-        pass
+        self.state = GameState(self, name, gender)
+
+    def enter_leaderboard(self, user: dict, score: dict):
+        self.state = LeaderboardState(self, user, score)
