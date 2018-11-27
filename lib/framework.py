@@ -2,6 +2,7 @@ import pygame, sys, platform, os
 
 from game.game import GameState
 from lib.menu import MenuState
+from leaderboard.leaderboard import LeaderboardState
 
 class Framework:
     """The core state of our app."""
